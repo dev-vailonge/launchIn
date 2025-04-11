@@ -80,8 +80,19 @@ export default function SignUp() {
 
   const handleGoogleSignIn = async () => {
     try {
+      const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
+      console.log('Signup Redirect URL:', redirectUrl)
+      console.log('Full redirect path:', `${redirectUrl}/dashboard`)
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
+        options: {
+          redirectTo: `${redirectUrl}/dashboard`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent'
+          }
+        }
       })
       if (error) throw error
     } catch (error) {

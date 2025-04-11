@@ -83,6 +83,9 @@ export default function Login() {
   const handleGoogleSignIn = async () => {
     try {
       const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
+      console.log('Redirect URL:', redirectUrl)
+      console.log('Full redirect path:', `${redirectUrl}/dashboard`)
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {

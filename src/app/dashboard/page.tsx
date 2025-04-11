@@ -21,15 +21,23 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    console.log('Dashboard page accessed')
+    fetchContacts()
+  }, [])
+
   const fetchContacts = async () => {
     try {
+      console.log('Fetching contacts...')
       const { data: { user } } = await supabase.auth.getUser()
       
       if (!user) {
+        console.log('No user found, redirecting to login')
         toast.error('Você precisa estar logado para ver os contatos')
         return
       }
 
+      console.log('User authenticated:', user.id)
       const { data, error } = await supabase
         .from('contacts')
         .select('*')
@@ -38,6 +46,7 @@ export default function Dashboard() {
 
       if (error) throw error
 
+      console.log('Contacts fetched successfully:', data?.length || 0, 'contacts found')
       setContacts(data || [])
     } catch (error) {
       console.error('Error:', error)
@@ -46,10 +55,6 @@ export default function Dashboard() {
       setLoading(false)
     }
   }
-
-  useEffect(() => {
-    fetchContacts()
-  }, [])
 
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

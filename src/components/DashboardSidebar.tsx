@@ -1,6 +1,6 @@
 'use client'
 
-import { LogOut, Users } from 'lucide-react'
+import { LogOut, Users, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
@@ -39,6 +39,18 @@ export function DashboardSidebar() {
         >
           <Users className="h-5 w-5" />
           <span>Contatos</span>
+        </Link>
+
+        <Link
+          href="/dashboard/gerar-ideias"
+          className={`flex items-center space-x-2 px-4 py-2 mt-2 rounded-lg text-sm font-medium transition-colors ${
+            pathname === '/dashboard/gerar-ideias'
+              ? 'bg-purple-100 text-purple-900'
+              : 'text-gray-700 hover:bg-purple-50 hover:text-purple-900'
+          }`}
+        >
+          <Sparkles className="h-5 w-5" />
+          <span>Gerar Ideias</span>
         </Link>
       </nav>
 

@@ -13,11 +13,28 @@ export default function ResultadoIdeias() {
   const [savingIdeas, setSavingIdeas] = useState<{ [key: number]: boolean }>({})
 
   useEffect(() => {
-    const storedIdeas = localStorage.getItem('generatedIdeas')
-    if (storedIdeas) {
-      setIdeas(JSON.parse(storedIdeas))
+    try {
+      const storedIdeas = localStorage.getItem('generatedIdeas')
+      if (storedIdeas) {
+        const parsedIdeas = JSON.parse(storedIdeas)
+        if (Array.isArray(parsedIdeas)) {
+          setIdeas(parsedIdeas)
+        } else {
+          console.error('Stored ideas is not an array:', parsedIdeas)
+          toast.error('Erro ao carregar as ideias')
+          router.push('/dashboard/gerar-ideias')
+        }
+      } else {
+        console.error('No ideas found in localStorage')
+        toast.error('Nenhuma ideia encontrada')
+        router.push('/dashboard/gerar-ideias')
+      }
+    } catch (error) {
+      console.error('Error parsing stored ideas:', error)
+      toast.error('Erro ao carregar as ideias')
+      router.push('/dashboard/gerar-ideias')
     }
-  }, [])
+  }, [router])
 
   const handleSaveIdea = async (idea: BusinessIdea, index: number) => {
     try {

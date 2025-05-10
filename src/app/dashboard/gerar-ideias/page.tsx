@@ -59,12 +59,17 @@ export default function GerarIdeias() {
       }
       
       console.log('[Page] Storing generated ideas in localStorage')
-      localStorage.setItem('generatedIdeas', JSON.stringify(data.ideas))
-      localStorage.setItem('lastPrompt', ideia)
-      
-      toast.success('Ideias geradas com sucesso!')
-      console.log('[Page] Navigating to results page')
-      router.push('/dashboard/gerar-ideias/resultado')
+      // Ensure we have valid data before storing
+      if (data && data.ideas && Array.isArray(data.ideas)) {
+        localStorage.setItem('generatedIdeas', JSON.stringify(data.ideas))
+        localStorage.setItem('lastPrompt', ideia)
+        
+        toast.success('Ideias geradas com sucesso!')
+        console.log('[Page] Navigating to results page')
+        router.push('/dashboard/gerar-ideias/resultado')
+      } else {
+        throw new Error('Formato de resposta inválido')
+      }
     } catch (error: any) {
       console.error('[Page] Error details:', {
         name: error.name,

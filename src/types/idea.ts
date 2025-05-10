@@ -8,4 +8,21 @@ export interface BusinessIdea {
 
 export interface GeneratedIdeas {
   ideas: BusinessIdea[]
+}
+
+export interface LaunchPlanTask {
+  name: string
+  description: string
+}
+
+export interface LaunchPlanStep {
+  title: string
+  objective: string
+  masterTip: string
+  successMeasure: string
+  tasks: LaunchPlanTask[]
+}
+
+export interface LaunchPlan {
+  steps: LaunchPlanStep[]
 } 

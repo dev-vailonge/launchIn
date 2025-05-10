@@ -38,7 +38,7 @@ export function DashboardSidebar() {
           }`}
         >
           <Users className="h-5 w-5" />
-          <span>Contatos</span>
+          <span>Lista de Ideias</span>
         </Link>
 
         <Link
